@@ -120,28 +120,38 @@ int main(void)
 //  /* USER CODE BEGIN WHILE */
   while (1)
   {
-    /* USER CODE END WHILE */
-	  /* Receive "Hello STM32F4!" */
-	  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_2, GPIO_PIN_RESET);
-	  HAL_SPI_TransmitReceive(&hspi2, (uint8_t *)tx_buffer, (uint8_t *)rx_buffer, BUFFER_SIZE, 1000);
-	  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_2, GPIO_PIN_SET);
+	    /* USER CODE END WHILE */
+		  /* Receive "Hello STM32F4!" */
+		  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_2, GPIO_PIN_RESET);
+		  HAL_SPI_Receive(&hspi2,(uint8_t *)rx_buffer, BUFFER_SIZE, 1000);
+		  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_2, GPIO_PIN_SET);
 
-	  HAL_Delay(1000);
+		  HAL_Delay(1000);
 
-	  /* Transmit "Hello slave!" */
-	  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_2, GPIO_PIN_RESET);
-	  HAL_SPI_TransmitReceive(&hspi2, (uint8_t *)"Hello STM32L4!", (uint8_t *)rx_buffer, BUFFER_SIZE, 1000);
-	  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_2, GPIO_PIN_SET);
+		  /* Transmit "Hello slave!" */
+		  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_2, GPIO_PIN_RESET);
+		  HAL_SPI_Transmit(&hspi2, (uint8_t*)tx_buffer, BUFFER_SIZE, 1000);
+		  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_2, GPIO_PIN_SET);
 
 
 
-	  HAL_UART_Transmit(&huart2, (uint8_t*)rx_buffer, strlen(rx_buffer), HAL_MAX_DELAY);
-	  HAL_UART_Transmit(&huart2, (uint8_t*)"\r\n", 2, HAL_MAX_DELAY);
+		  HAL_UART_Transmit(&huart2, (uint8_t*)rx_buffer, strlen(rx_buffer), 1000);
+		  HAL_UART_Transmit(&huart2, (uint8_t*)"\r\n", 2, 1000);
 
-	  //Status LED
-	  HAL_GPIO_TogglePin( LD2_GPIO_Port, LD2_Pin);
-	  HAL_Delay(1000);
-    /* USER CODE BEGIN 3 */
+		  //Status LED
+		  HAL_GPIO_TogglePin( LD2_GPIO_Port, LD2_Pin);
+		  HAL_Delay(1000);
+	    /* USER CODE BEGIN 3 */
+
+//	  /* Transmit "Hello slave!" */
+//	  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_2, GPIO_PIN_RESET);
+//	  HAL_SPI_Transmit(&hspi2, (uint8_t*)tx_buffer, BUFFER_SIZE, 1000);
+//	  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_2, GPIO_PIN_SET);
+//
+//	  //Status LED
+//	  HAL_GPIO_TogglePin( LD2_GPIO_Port, LD2_Pin);
+//	  HAL_Delay(1000);
+//    /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */
 }
